@@ -3,3 +3,4 @@ services:
   fs:
     build: .
     privileged: true
+    command: bash ./test.sh

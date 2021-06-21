@@ -12,6 +12,4 @@ how to run
 
 ```
 docker-compose run fs
-python3 passthrough.py /real /fuse
-docker exec -ti <container id> bash
 ```

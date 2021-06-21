@@ -9,11 +9,12 @@ import errno
 from fuse import FUSE, FuseOSError, Operations
 from functools import wraps
 
+PID = os.getpid()
 
 def func_info(func):
     @wraps(func)
     def inner(*args, **kwargs):
-        print("{}({},{})".format(func.__name__, ', '.join(map(str, args[1:])), ', '.join([f"{k}={v}" for k, v in kwargs])))
+        print("[{}]: {}({})".format(PID ,func.__name__, ', '.join((map(str, list(args[1:]) + [f"{k}={v}" for k, v in kwargs])))))
         return func(*args, **kwargs)
 
     return inner  # this is the fun_obj mentioned in the above content
@@ -25,7 +26,6 @@ def decorate_all(decorator):
             if callable(getattr(cls, attr)):
                 if attr.startswith("_"):
                     continue
-                print(getattr(cls, attr), attr)
                 setattr(cls, attr, decorator(getattr(cls, attr)))
         return cls
 

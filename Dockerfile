@@ -6,3 +6,6 @@ COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 RUN mkdir /real
 RUN mkdir /fuse
+RUN mkdir /real2
+RUN mkdir /fuse2
+COPY test.sh .
