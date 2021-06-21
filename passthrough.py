@@ -7,8 +7,32 @@ import sys
 import errno
 
 from fuse import FUSE, FuseOSError, Operations
+from functools import wraps
 
 
+def func_info(func):
+    @wraps(func)
+    def inner(*args, **kwargs):
+        print("{}({},{})".format(func.__name__, ', '.join(map(str, args[1:])), ', '.join([f"{k}={v}" for k, v in kwargs])))
+        return func(*args, **kwargs)
+
+    return inner  # this is the fun_obj mentioned in the above content
+
+
+def decorate_all(decorator):
+    def decorate(cls):
+        for attr in cls.__dict__:  # there's propably a better way to do this
+            if callable(getattr(cls, attr)):
+                if attr.startswith("_"):
+                    continue
+                print(getattr(cls, attr), attr)
+                setattr(cls, attr, decorator(getattr(cls, attr)))
+        return cls
+
+    return decorate
+
+
+@decorate_all(func_info)
 class Passthrough(Operations):
     def __init__(self, root):
         self.root = root
@@ -42,7 +66,8 @@ class Passthrough(Operations):
         full_path = self._full_path(path)
         st = os.lstat(full_path)
         return dict((key, getattr(st, key)) for key in ('st_atime', 'st_ctime',
-                     'st_gid', 'st_mode', 'st_mtime', 'st_nlink', 'st_size', 'st_uid'))
+                                                        'st_gid', 'st_mode', 'st_mtime', 'st_nlink', 'st_size',
+                                                        'st_uid'))
 
     def readdir(self, path, fh):
         full_path = self._full_path(path)
@@ -75,8 +100,9 @@ class Passthrough(Operations):
         full_path = self._full_path(path)
         stv = os.statvfs(full_path)
         return dict((key, getattr(stv, key)) for key in ('f_bavail', 'f_bfree',
-            'f_blocks', 'f_bsize', 'f_favail', 'f_ffree', 'f_files', 'f_flag',
-            'f_frsize', 'f_namemax'))
+                                                         'f_blocks', 'f_bsize', 'f_favail', 'f_ffree', 'f_files',
+                                                         'f_flag',
+                                                         'f_frsize', 'f_namemax'))
 
     def unlink(self, path):
         return os.unlink(self._full_path(path))
@@ -129,6 +155,7 @@ class Passthrough(Operations):
 
 def main(mountpoint, root):
     FUSE(Passthrough(root), mountpoint, nothreads=True, foreground=True)
+
 
 if __name__ == '__main__':
     main(sys.argv[2], sys.argv[1])
