@@ -11,7 +11,7 @@ issue.
 how to run 
 
 ```
-docker-compose exec fs
+docker-compose run fs
 python3 passthrough.py /real /fuse
 docker exec -ti <container id> bash
 ```
