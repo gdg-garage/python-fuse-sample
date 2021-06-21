@@ -7,3 +7,11 @@ https://www.stavros.io/posts/python-fuse-filesystem/
 
 If you see anything needing improvement or have any feedback, please open an
 issue.
+
+how to run 
+
+```
+docker-compose exec fs
+python3 passthrough.py /real /fuse
+docker exec -ti <container id> bash
+```
