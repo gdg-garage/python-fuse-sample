@@ -43,6 +43,7 @@ dumb_and_dangerous cp /fuse2/cp /fuse/cp
 dumb_and_dangerous chmod 777 /fuse2/cp
 dumb_and_dangerous chown root:root /fuse2/cp
 dumb_and_dangerous mkdir /fuse/aaa
+dumb_and_dangerous mkdir -p /fuse/a/b/c
 dumb_and_dangerous rm -rf /fuse/aaa
 dumb_and_dangerous ln -s /fuse/cp /fuse/cp-sl
 dumb_and_dangerous ln -s /fuse/cp /fuse2/cp-sl
