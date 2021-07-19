@@ -32,9 +32,12 @@ date >>$log
 
 dumb_and_dangerous touch /fuse/touched
 dumb_and_dangerous touch /fuse/touched
-dumb_and_dangerous rm /fuse/touched
+dumb_and_dangerous ls /fuse/touched
 dumb_and_dangerous ls /fuse/
+dumb_and_dangerous rm /fuse/touched
 dumb_and_dangerous echo "xxx" \> /fuse/echo
+dumb_and_dangerous ls /fuse/echo
+dumb_and_dangerous cat /fuse/echo
 dumb_and_dangerous mv /fuse/echo /fuse/mv
 dumb_and_dangerous mv /fuse/mv /fuse2/mv
 #dumb_and_dangerous mv /fuse/mv /fuse2/mv
