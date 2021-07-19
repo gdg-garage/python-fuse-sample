@@ -31,10 +31,21 @@ date >>$log
 (python3 passthrough.py /real2 /fuse2 >>$log) &
 
 dumb_and_dangerous touch /fuse/touched
+dumb_and_dangerous touch /fuse/touched
+dumb_and_dangerous rm /fuse/touched
 dumb_and_dangerous ls /fuse/
 dumb_and_dangerous echo "xxx" \> /fuse/echo
 dumb_and_dangerous mv /fuse/echo /fuse/mv
 dumb_and_dangerous mv /fuse/mv /fuse2/mv
-dumb_and_dangerous mv /fuse/mv /fuse2/mv
+#dumb_and_dangerous mv /fuse/mv /fuse2/mv
+dumb_and_dangerous cp /fuse2/mv /fuse2/cp
+dumb_and_dangerous cp /fuse2/cp /fuse/cp
+dumb_and_dangerous chmod 777 /fuse2/cp
+dumb_and_dangerous chown root:root /fuse2/cp
+dumb_and_dangerous mkdir /fuse/aaa
+dumb_and_dangerous rm -rf /fuse/aaa
+dumb_and_dangerous ln -s /fuse/cp /fuse/cp-sl
+dumb_and_dangerous ln -s /fuse/cp /fuse2/cp-sl
+dumb_and_dangerous ln /fuse/cp /fuse/cp-hl
 
 hr

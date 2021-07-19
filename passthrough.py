@@ -16,7 +16,7 @@ def func_info(func):
     def inner(*args, **kwargs):
         print("[{}]: {}({})".format(PID ,func.__name__, ', '.join((map(str, list(args[1:]) + [f"{k}={v}" for k, v in kwargs])))))
         r = func(*args, **kwargs)
-        print("{}".format(r))
+        print("  {}".format(r))
         return r
 
     return inner  # this is the fun_obj mentioned in the above content
